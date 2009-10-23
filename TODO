@@ -3,4 +3,4 @@
 -fix lame tag issue's
 -Clean up code
 -Add comments
--replace += , +  because it's slow 
+-add cli arguments
