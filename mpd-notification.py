@@ -58,37 +58,34 @@ def main():
 
 
     # Libnotify
-    artist = getArtist(client)
-    album = getAlbum(client)
     size = 128, 128
 
     # resize image
-    image = str(albumart(artist, album))
+    image = str(albumart(getArtist(client), getAlbum(client)))
     im = Image.open(image)
     im.thumbnail(size)
     im.save(image, "png")
 
-#im.resize((80,80))
 
-    pic =  "--icon=" + image 
+    pic = '--icon=%' % image
+    print pic
     head = "Now Playing"
     msg = nowplaying(client)
 
     # call notify send
     subprocess.call(['notify-send', pic,head,msg])
 
-
+# Get Artist
 def getArtist(client):
     # Get Dict with current song info and mpd status
     mpddict = client.currentsong()
-    artist  = mpddict['artist']
-    return artist
+    return mpddict['artist']
 
+# Get Album
 def getAlbum(client):
     # Get Dict with current song info and mpd status
     mpddict = client.currentsong()
-    album  = mpddict['album']
-    return album
+    return mpddict['album']
 
 # Get Now Playing info
 def nowplaying(client):
@@ -96,7 +93,6 @@ def nowplaying(client):
     # Get Dict with current song info and mpd status
     mpddict = client.currentsong()
     mpdstatus = client.status()
-
 
     # Get Random / repeat mode
     if int(mpdstatus['random']) == 0:
