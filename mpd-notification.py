@@ -98,35 +98,29 @@ def nowplaying(client):
     mpdstatus = client.status()
 
 
-    # VAR's
-    artist  = mpddict['artist']
-    title  = mpddict['title']
-    album = mpddict['album']
-
-    randommode = ''
-    repeatmode = ''
+    # Get Random / repeat mode
     if int(mpdstatus['random']) == 0:
-        randommode = "off"
+        mpddict['random']  = "off"
     else:
-        randommode = "on"
+        mpddict['random'] = "on"
 
     if int(mpdstatus['repeat']) == 0:
-        repeatmode = "off"
+        mpddict['repeat'] = "off"
     else:
-        repeatmode = "on"
+        mpddict['repeat'] = "on"
 
-    state = mpdstatus['state']
+    # Get the mpd status ( playing / pause)
+    mpddict['state'] = mpdstatus['state']
+
     # Time
     time = mpdstatus['time']
     played = int(time.split(':')[0])
     length = int(time.split(':')[1]) 
-    played = '{0}:{1}'.format(*divmod(played, 60))
-    length = '{0}:{1}'.format(*divmod(length, 60))
+    mpddict['played'] = '{0}:{1}'.format(*divmod(played, 60))
+    mpddict['length'] = '{0}:{1}'.format(*divmod(length, 60))
 
-    mpdinfo = artist + " - " + title + "\n"
-    mpdinfo += "Album: " + album + "\n"
-    mpdinfo += "State:  [" + state + "] " + played + "/" + length + "\n"
-    mpdinfo += "Repeat: " + repeatmode + "   Random: " + randommode + "\n"
+    # Concatenate all info in one string
+    mpdinfo = '{artist} - {title}\n Album:  {album}\n State:  [ {state} ]  {played} / {length}\n Repeat:  {repeat}  Random:  {random}\n'.format(**mpddict)
 
     return mpdinfo
 
