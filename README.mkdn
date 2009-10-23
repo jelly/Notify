@@ -1,0 +1,27 @@
+About
+=====
+
+Notify
+------
+
+Notify is a project to develop simple libnotify notifications with python-notify
+
+Notifications
+-------------
+
+These notifications are planned / developped (*):
+
+-MPD *
+-GMail
+-System Info
+-Volume
+
+
+MPD
+---
+
+Depends on:
+-python-mpd
+
+Optional Dependency for album art resizing:
+-pil
