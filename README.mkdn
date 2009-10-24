@@ -9,7 +9,7 @@ Notify is a project to develop simple libnotify notifications with python-notify
 Notifications
 -------------
 
-These notifications are planned / developped (*):
+These notifications are planned / developed (*):
 
 -MPD *
 -GMail
