@@ -4,3 +4,5 @@
 -Clean up code
 -Add comments
 -add cli arguments
+-improve retreiving albumart
+-fix estimate time / length display 0:3 instead of 0:03
