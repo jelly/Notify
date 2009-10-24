@@ -59,7 +59,7 @@ def main():
     # Libnotify message
     head = "Now Playing"
     msg = nowplaying(client)
-    albumartwork = albumart(getArtist(client), getAlbum(client))
+    albumartwork = albumart(client)
 
     # Image size
     size = 128, 128
@@ -78,20 +78,6 @@ def main():
         subprocess.call(['notify-send', pic,head,msg])
     else:
         subprocess.call(['notify-send', head,msg])
-
-
-
-# Get Artist
-def getArtist(client):
-    # Get Dict with current song info and mpd status
-    mpddict = client.currentsong()
-    return mpddict['artist']
-
-# Get Album
-def getAlbum(client):
-    # Get Dict with current song info and mpd status
-    mpddict = client.currentsong()
-    return mpddict['album']
 
 # Get Now Playing info
 def nowplaying(client):
@@ -126,15 +112,16 @@ def nowplaying(client):
 
     return mpdinfo
 
-def albumart(artist, album):
+def albumart(client):
         # Album Art Part
+        mpddict = client.currentsong()
 
-        home = os.getenv("HOME")
-        if artist == "" and album == "":
-                if os.path.exists(home + "/.album"):
-                        os.remove(home + "/.album")
+        file =  os.getenv("HOME") + '/.album'
+        if mpddict['artist'] == "" and mpddict['album'] == "":
+                if os.path.exists(file):
+                        os.remove(file)
         else:
-                url = "http://www.albumart.org/index.php?srchkey=" + artist + "+" + album + "&itempage=1&newsearch=1&searchindex=Music"
+                url = 'http://www.albumart.org/index.php?srchkey={artist}+{album}&itempage=1&newsearch=1&searchindex=Music'.format(**mpddict)
                 albumart = urllib.urlopen(url).read()
                 image = ""
                 for line in albumart.split("\n"):
@@ -142,19 +129,19 @@ def albumart(artist, album):
                                 image = line.partition('src="')[2].partition('"')[0]
                                 break
                 if image:
-                        if os.path.exists("/tmp/imagepath") and os.path.exists(home + "/.album"):
+                        if os.path.exists("/tmp/imagepath") and os.path.exists(file):
                                 imagepath = open("/tmp/imagepath").read()
                                 if imagepath == image:
                                         pass
                                 else:
-                                        urllib.urlretrieve(image, home + "/.album")
+                                        urllib.urlretrieve(image, file)
                         else:
-                                urllib.urlretrieve(image, home + "/.album")
+                                urllib.urlretrieve(image, file)
                         open("/tmp/imagepath","w").write(image)
                 else:
-                        if os.path.exists(home + "/.album"):
-                                os.remove(home + "/.album")
-        return home + "/.album"
+                        if os.path.exists(file):
+                                os.remove(file)
+        return file
 
 
 
