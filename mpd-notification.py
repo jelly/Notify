@@ -66,9 +66,7 @@ def main():
     im.thumbnail(size)
     im.save(image, "png")
 
-
-    pic = '--icon=%' % image
-    print pic
+    pic = '--icon=%(picture)s' %  {'picture': image}
     head = "Now Playing"
     msg = nowplaying(client)
 
