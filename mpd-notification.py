@@ -112,11 +112,17 @@ def nowplaying(client):
 
     return mpdinfo
 
+# Pre: there is an mpd connection
+# Post: download album art and return the file location
 def albumart(client):
-        # Album Art Part
+        # Get current song dict
         mpddict = client.currentsong()
 
+        # Set image location
         file =  os.getenv("HOME") + '/.album'
+
+        # If artist and album exists , retreive albumart 
+        # Else do nothing
         if mpddict['artist'] == "" and mpddict['album'] == "":
                 if os.path.exists(file):
                         os.remove(file)
