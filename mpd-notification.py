@@ -56,22 +56,30 @@ def main():
             client.disconnect()
             sys.exit(2)
 
-
-    # Libnotify
-    size = 128, 128
-
-    # resize image
-    image = str(albumart(getArtist(client), getAlbum(client)))
-    im = Image.open(image)
-    im.thumbnail(size)
-    im.save(image, "png")
-
-    pic = '--icon=%(picture)s' %  {'picture': image}
+    # Libnotify message
     head = "Now Playing"
     msg = nowplaying(client)
+    albumartwork = albumart(getArtist(client), getAlbum(client))
 
-    # call notify send
-    subprocess.call(['notify-send', pic,head,msg])
+    # Image size
+    size = 128, 128
+    
+    # pre: album art is fetched
+    # post: display album art 
+    # else: display noalbum art
+    if os.path.isfile('/home/jelle/.album'):
+        # resize image
+        im = Image.open(albumartwork)
+        im.thumbnail(size)
+        im.save(albumartwork, "png")
+        pic = '--icon=%(picture)s' %  {'picture': albumartwork}
+
+        # call notify send
+        subprocess.call(['notify-send', pic,head,msg])
+    else:
+        subprocess.call(['notify-send', head,msg])
+
+
 
 # Get Artist
 def getArtist(client):
