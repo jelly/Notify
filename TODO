@@ -1,8 +1,17 @@
 # MPD - NOTIFY
--add no cover 
 -fix lame tag issue's
 -Clean up code
 -Add comments
--add cli arguments
 -improve retreiving albumart
+-fix README
 -fix estimate time / length display 0:3 instead of 0:03
+
+
+# SYS - NOTIFY
+-fix README
+-fix concantenations ( speedup script http://www.skymind.com/~ocrow/python_string/ )
+-getSlurpy's update function
+-use pacman python api
+-convert load command to /proc/uptime
+-speedup script
+-fix layout
