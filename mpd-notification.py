@@ -89,12 +89,12 @@ def main():
             print "You don't seem to have pil installed \n  pacman -S pil"
 
     # Without Albumart 
-    if len(sys.argv) == 2 and sys.argv[1] == "--noalbumart":
+    elif len(sys.argv) == 2 and sys.argv[1] == "--noalbumart":
         msg = nowplaying(client)
         subprocess.call(['notify-send', head,msg])
         
     else:
-        print "unkown option: \n  use '--albumart' for showing albumart else run it with no options \n  version: 0.2"
+        print "unkown option: \n  use '--noalbumart' if you don't want to show albumart else \n  just run it without arguments \n  mpd-notify: version: 0.2"
 
 
 
