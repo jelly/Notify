@@ -8,7 +8,7 @@ from socket import error as SocketError
 import subprocess
 import urllib
 import os
-import Image
+import sys
 
 HOST = 'localhost'
 PORT = '6600'
@@ -56,29 +56,77 @@ def main():
             client.disconnect()
             sys.exit(2)
 
-    # Libnotify message
+    # Notify 
     head = "Now Playing"
-    msg = nowplaying(client)
-    albumartwork = albumart(client)
 
-    # Image size
-    size = 128, 128
-    
-    # pre: album art is fetched
-    # post: display album art 
-    # else: display noalbum art
-    if os.path.isfile('/home/jelle/.album'):
-        # resize image
-        im = Image.open(albumartwork)
-        im.thumbnail(size)
-        im.save(albumartwork, "png")
-        pic = '--icon=%(picture)s' %  {'picture': albumartwork}
+    # With Albumart
+    if len(sys.argv) == 1:
+        
+        msg = nowplaying(client)
+        try:
+             # import lib for resizing albumart
+            import Image
 
-        # call notify send
-        subprocess.call(['notify-send', pic,head,msg])
-    else:
+            # Image size
+            size = 128, 128
+
+            # Get albumart
+            albumartwork = albumart(client)
+
+            # pre: album art is fetched
+            # post: display album art 
+            # else: display noalbum art
+            if os.path.isfile('/home/jelle/.album'):
+                # resize image
+                im = Image.open(albumartwork)
+                im.thumbnail(size)
+                im.save(albumartwork, "png")
+                pic = '--icon=%(picture)s' %  {'picture': albumartwork}
+                subprocess.call(['notify-send', pic,head,msg])
+            else:
+                subprocess.call(['notify-send', head,msg])
+        except:
+            print "You don't seem to have pil installed \n  pacman -S pil"
+
+    # Without Albumart 
+    if len(sys.argv) == 2 and sys.argv[1] == "--noalbumart":
+        msg = nowplaying(client)
         subprocess.call(['notify-send', head,msg])
+        
+    else:
+        print "unkown option: \n  use '--albumart' for showing albumart else run it with no options \n  version: 0.2"
 
+
+
+    
+
+
+def resizeablum():
+    try:
+        # import lib for resizing albumart
+        import Image
+
+        # Image size
+        size = 128, 128
+
+        # Get albumart
+        albumartwork = albumart(client)
+
+        # pre: album art is fetched
+        # post: display album art 
+        # else: display noalbum art
+        if os.path.isfile('/home/jelle/.album'):
+            # resize image
+            im = Image.open(albumartwork)
+            im.thumbnail(size)
+            im.save(albumartwork, "png")
+            pic = '--icon=%(picture)s' %  {'picture': albumartwork}
+        else:
+            pic = ''
+    except:
+        print "you don't seem to have pil installed"
+
+        
 # Get Now Playing info
 def nowplaying(client):
 
