@@ -2,7 +2,7 @@
 import os,string
 
 #Enter your username and password below within double quotes
-# eg. username="username" and password="/path/to/passwdfile"
+# eg. username="username" and password="yourpasword"
 username="xxxxxxxxxx"
 password = "xxxxxxxx"
 
