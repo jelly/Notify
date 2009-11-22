@@ -11,6 +11,7 @@ Notifications
 
 MPD
 ---
+An simple notification for mpd, shows current song, artist, album, length, repeat,random and albumart
 
 Depends on:
 -python-mpd
@@ -20,18 +21,23 @@ Optional Dependency for album art resizing:
 
 Volume
 ------
+Simple volume level notification shows mixer status
 
 System Notification
 -------------------
+Notification that shows Pacman updates, diskspace, uptime, load, kernel version, memory.
+
 
 Battery
 -------
+Battery notification that shows battery left and status.
 
-Sound
------
+
 
 TodoList
 --------
+Simple todolist notification, uses an txt file.
 
 Gmail
 -----
+Shows number of new mails from Gmail
