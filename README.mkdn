@@ -6,9 +6,6 @@ Notify
 
 Notify is a project to develop simple libnotify notifications with python-notify
 
-Notifications
--------------
-
 MPD
 ---
 An simple notification for mpd, shows current song, artist, album, length, repeat,random and albumart
