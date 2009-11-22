@@ -45,7 +45,9 @@ def getDisks():
             disks.join("root:  ")
         else:
             disks.join(partition).join(":   ")
+        str_list = [partition,'  ', str(diskspace(partition)-freespace(partition)),"/",str(diskspace(partition)),'Gb \n']
 
+        disks.join(str_list)
         disks += partition + "  "
         disks += (str(diskspace(partition) - freespace(partition))) 
         disks += "/" 
@@ -60,7 +62,7 @@ def get_theme_name():
         theme = fp.split('\"')[1]
         icon = fp.split('\"')[3]
         font = fp.split('\"')[5]
-        themes = "GTK Theme:  %s\n Icon: %s\n Font: %s\n" % (theme,icon,font)
+        themes = "Theme: %s\n Icon: %s\n Font: %s\n" % (theme,icon,font)
         return themes
 
 # Kernel version
@@ -75,9 +77,8 @@ used = get_memory() - get_memfree()
 # Updates
 updates = commands.getoutput('pacman -Qu | wc -l')
 
-
 head = "System information"
-msg = "Kernel version: %s \n Uptime: %s \n Memory: %s / %s Mb\n\n Disks: (used/total)\n %s  \n GTK Theme: \n %s \n Updates: %s \n" % (uname,str(uptime),str(used),str(get_memory()),getDisks(),get_theme_name(),str(updates))
+msg = "Kernel version: %s \n Uptime: %s \n Memory: %s / %s Mb\n\n Disks: (used/total)\n %s  \n %s \n Updates: %s \n" % (uname,str(uptime),str(used),str(get_memory()),getDisks(),get_theme_name(),str(updates))
 
-pic="--icon=/home/jelle/archlinux.png"
+pic="--icon=/home/jelle/Afbeeldingen/Logos/archlinux.png"
 subprocess.call(['notify-send', pic,head,msg],)
