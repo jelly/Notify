@@ -4,6 +4,8 @@ import commands
 import time
 import os, os.path
 
+# Set the icon here
+pic="--icon=/home/jelle/Afbeeldingen/Logos/archlinux.png"
 # Set your partitions here:
 partitions = ['/' ,'/home/jelle' , '/var']
 
@@ -80,5 +82,4 @@ updates = commands.getoutput('pacman -Qu | wc -l')
 head = "System information"
 msg = "Kernel version: %s \n Uptime: %s \n Memory: %s / %s Mb\n\n Disks: (used/total)\n %s  \n %s \n Updates: %s \n" % (uname,str(uptime),str(used),str(get_memory()),getDisks(),get_theme_name(),str(updates))
 
-pic="--icon=/home/jelle/Afbeeldingen/Logos/archlinux.png"
 subprocess.call(['notify-send', pic,head,msg],)
