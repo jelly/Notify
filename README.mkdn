@@ -9,14 +9,6 @@ Notify is a project to develop simple libnotify notifications with python-notify
 Notifications
 -------------
 
-These notifications are planned / developed (*):
-
--MPD *
--GMail
--System Info
--Volume
-
-
 MPD
 ---
 
@@ -25,3 +17,21 @@ Depends on:
 
 Optional Dependency for album art resizing:
 -pil
+
+Volume
+------
+
+System Notification
+-------------------
+
+Battery
+-------
+
+Sound
+-----
+
+TodoList
+--------
+
+Gmail
+-----
