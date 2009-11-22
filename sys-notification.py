@@ -5,7 +5,7 @@ import time
 import os, os.path
 
 # Set your partitions here:
-partitions = ['/' ,'/home/jelle' , '/var', '/boot']
+partitions = ['/' ,'/home/jelle' , '/var']
 
 # Get the system memory
 def get_memory():
@@ -46,6 +46,7 @@ def getDisks():
         else:
             disks.join(partition).join(":   ")
 
+        disks += partition + "  "
         disks += (str(diskspace(partition) - freespace(partition))) 
         disks += "/" 
         disks += str(diskspace(partition)) + " Gb \n"
@@ -59,7 +60,7 @@ def get_theme_name():
         theme = fp.split('\"')[1]
         icon = fp.split('\"')[3]
         font = fp.split('\"')[5]
-        themes = "GTK Theme:  " + theme + "\n" + "Icon:  " + icon + "\n" + "Font:  " + font + "\n"
+        themes = "GTK Theme:  %s\n Icon: %s\n Font: %s\n" % (theme,icon,font)
         return themes
 
 # Kernel version
@@ -76,17 +77,7 @@ updates = commands.getoutput('pacman -Qu | wc -l')
 
 
 head = "System information"
-
-msg = "Kernel version: " + uname +"\n"
-msg += "Uptime: " + str(uptime) + "\n"
-msg += "Memory: " + str(used) + " / " + str(get_memory())  + " Mb\n\n"
-msg += "Disks" + "\n"
-msg += getDisks()
-msg += "\n"
-msg += str(get_theme_name())
-msg += "\n"
-msg += "Updates: \n"
-msg += "Pacman: " + str(updates) + "\n"
+msg = "Kernel version: %s \n Uptime: %s \n Memory: %s / %s Mb\n\n Disks: (used/total)\n %s  \n GTK Theme: \n %s \n Updates: %s \n" % (uname,str(uptime),str(used),str(get_memory()),getDisks(),get_theme_name(),str(updates))
 
 pic="--icon=/home/jelle/archlinux.png"
 subprocess.call(['notify-send', pic,head,msg],)
